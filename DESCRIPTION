@@ -29,7 +29,7 @@ Imports:
     rgdal (>= 1.2),
     rmarkdown (>= 1.9),
     sp (>= 1.2),
-    tidyr (>=1.0.0)
+    tidyr (>= 1.0.0)
 Suggests:
 	knitr, 
 	maptools,
