@@ -517,40 +517,6 @@ kuenm_ceval <- function(path, occ.joint, occ.tra, occ.test, batch, out.eval, thr
     }
   }
 
-  ##Plot
-  #set number of significant digits (default 3 in tibbles)
-  options(pillar.sigfig=21)
-
-  #extract, merge and modify columns from ku_enm_eval and ku_enm_best
-  tb1 <- as_tibble(ku_enm_eval) %>%
-    select(1, 4, 5) %>%
-    rename(Omission_rate = 2) %>%
-    mutate(log_AICc = log(AICc))
-  tb2 <- as_tibble(ku_enm_best) %>%
-    select(Model) %>%
-    mutate(Models = "selected")
-  tb <- tb1 %>%
-    full_join(tb2, by = "Model")
-  tb$Models <- tb$Models %>%
-    replace_na("all") %>%
-    as.factor()
-
-  #plot results
-  ggplot(tb, aes(x = log_AICc, y = Omission_rate, color = Models)) +
-    geom_point(aes(shape = Models, color = Models), size = 1) +
-    scale_shape_manual(values = c(1, 17)) +
-    scale_color_manual(values = c("gray35", "blue")) +
-    labs(x = "Natural logarithm of AICc", y = paste("Omission rates at ", threshold, "% threshold value", sep = "")) +
-    theme(legend.justification = c(1,0), legend.position = c(1,0),
-          legend.title = element_text(color = "blue", size = 8), legend.text = element_text(size = 6),
-          axis.title.x = element_text(size = 10), axis.title.y = element_text(size = 10))
-
-  ggsave(paste(out.eval, "calibration_figure.png", sep = "/"), width = 80, height = 80, units = "mm", dpi = 600)
-
-  ##html file
-  ###Writing the html file
-  html_eval(path = out.eval, file.name = "calibration_results")
-
   ##Retuning objects
   ###Dataframes in a list
   list_res <- list(ku_enm_stats, ku_enm_best, ku_enm_eval)
