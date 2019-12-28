@@ -28,7 +28,8 @@ Imports:
     Rcpp (>= 0.12),
     rgdal (>= 1.2),
     rmarkdown (>= 1.9),
-    sp (>= 1.2)
+    sp (>= 1.2),
+    tidyr (>=1.0.0)
 Suggests:
 	knitr, 
 	maptools,
